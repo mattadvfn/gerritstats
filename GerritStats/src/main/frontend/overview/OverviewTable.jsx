@@ -221,7 +221,20 @@ export default class OverviewTable extends React.Component {
                     </Td>
                 ),
             },
+            'reviewRatio': {
+                sortFunction: Reactable.Sort.NumericInteger,
+                highlighter: new TableCellHighlighter(overviewUserdata, selectedUsers, 'reviewRatio'),
+                description: '% of time when user reviewed commits they were added to',
+                header: (<span>% Reviews Done</span>),
+                cell: (record, index) => (
+                    <Td key={'reviewRatio' + index} column='reviewRatio'
+                        style={this.computeCellStyle(index, 'reviewRatio')}>
+                        {numeral((record.reviewCountPlus2 + record.reviewCountPlus1 + record.reviewCountMinus1 + record.reviewCountMinus2) / record.addedAsReviewerToCount).format("%")}
+                    </Td>
+                ),
+            },
         };
+
     }
 
     componentWillReceiveProps(nextProps) {
